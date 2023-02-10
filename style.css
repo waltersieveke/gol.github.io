@@ -1,0 +1,62 @@
+:root{
+    --maincolor : #37419a;
+}
+html{
+    background-color: white;
+}
+*{
+    margin:0px;
+    padding: 0px;
+}
+h2{
+    width:100%;
+    color:var(--maincolor);
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+.centerchilds{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+#container{
+    width:100%;
+    font-family: sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
+.buttonwrapper{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    
+}
+.buttonwrapper button{
+    padding: 16px 8px;
+    min-width: 100px;
+    background-color: white;
+    border: 1px solid  var(--maincolor);
+    color: var(--maincolor);
+    cursor: pointer;
+
+}
+.buttonwrapper button:hover{
+    background-color: var(--maincolor);
+    border-color: white;
+    color:white;
+}
+.slider{
+    width: 80%;
+    min-width: 250px;
+}
+.margin{
+    margin-top: 16px;
+}

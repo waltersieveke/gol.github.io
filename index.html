@@ -1,137 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="./style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-		<style>
-			.button {
-				border: none;
-				color: white;
-				padding: 16px 32px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-				margin: 4px 2px;
-				transition-duration: 0.4s;
-				cursor: pointer;
-			}
-
-			.button1 {
-				background-color: white;
-				color: black;
-				border: 2px solid #4caf50;
-			}
-
-			.button1:hover {
-				background-color: #4caf50;
-				color: white;
-			}
-
-			.slidecontainer {
-				width: 100%;
-			}
-
-			.slider {
-				width: 20%;
-				height: 25px;
-				background: #d3d3d3;
-				outline: none;
-				opacity: 0.7;
-				-webkit-transition: 0.2s;
-				transition: opacity 0.2s;
-			}
-
-			.slider:hover {
-				opacity: 1;
-			}
-
-			.slider::-webkit-slider-thumb {
-				-webkit-appearance: none;
-				appearance: none;
-				width: 25px;
-				height: 25px;
-				background: #4caf50;
-				cursor: pointer;
-			}
-
-			.slider::-moz-range-thumb {
-				width: 25px;
-				height: 25px;
-				background: #4caf50;
-				cursor: pointer;
-			}
-			div {
-				text-align: center;
-			}
-			.score {
-				color: rgb(0, 0, 0);
-				padding: 16px 32px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-				margin: 4px 2px;
-			}
-			.rainbows {
-				margin: 0;
-				box-sizing: border-box;
-				background-color: #191919;
-				min-height: 3vh;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-family: Helvetica, Sans-serif;
-				cursor: pointer;
-			}
-			.rainbow-al {
-				text-decoration: none;
-				text-align: center;
-				color: #fff;
-			}
-			.rainbow-button {
-				width: calc(6vw + 4px);
-				height: calc(2vw + 4px);
-				background-image: linear-gradient(
-					90deg,
-					#00c0ff 0%,
-					#ffcf00 49%,
-					#fc4f4f 80%,
-					#00c0ff 100%
-				);
-				border-radius: 5px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				text-transform: uppercase;
-				font-size: 1vw;
-				font-weight: bold;
-			}
-			.rainbow-button:after {
-				content: attr(alt);
-				width: 6vw;
-				height: 2vw;
-				background-color: #191919;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.rainbow-button:hover {
-				animation: slidebg 2s linear infinite;
-			}
-
-			@keyframes slidebg {
-				to {
-					background-position: 20vw;
-				}
-			}
-		</style>
-		<div>
-			<font color="#034B61" font size="85">GAME OF LIFE</font>
-		</div>
 	</head>
-	<body bgcolor="#FFFFFF">
-		<div>
+	<body>
+		<h2 color="#034B61" font size="85">GAME OF LIFE</h2>
+
+		<div class="centerchilds">
 			<canvas
 				id="mycanvas"
 				width="1300"
@@ -139,20 +15,18 @@
 				style="border: 1px solid #000000">
 			</canvas>
 		</div>
-		<div>
-			<p id="container" class="score" color="#034B61">Generation:</p>
-
-			<button class="button button1" value="click" id="Genw">
-				Generationswechsel
-			</button>
-			<button class="button button1" value="click" id="st">Start/Stopp</button>
-			<button class="button button1" value="click" id="random">Random</button>
-			<button class="button button1" value="click" id="clear">Clear</button>
-			<button class="button button1" value="click" id="Save">Save</button>
-			<button class="button button1" value="click" id="Load">Load</button>
-			<button class="button button1" value="click" id="Rainbow">Rainbow</button>
+		<p id="container" class="score" color="#034B61">Generation:</p>
+		<div class="buttonwrapper">
+			<button value="click" id="Genw">Generationswechsel</button>
+			<button value="click" id="st">Start/Stopp</button>
+			<button value="click" id="random">Random</button>
+			<button value="click" id="clear">Clear</button>
+			<button value="click" id="Save">Save</button>
+			<button value="click" id="Load">Load</button>
+			<button value="click" id="Rainbow">Rainbow</button>
+			<button value="click" id="Darkmode">Darkmode</button>
 		</div>
-		<div class="slidecontainer">
+		<div class="centerchilds margin">
 			<input
 				type="range"
 				min="4"
@@ -161,16 +35,16 @@
 				class="slider"
 				id="myRange" />
 		</div>
-		<div class="slidecontainer">
+		<div class="centerchilds margin">
 			<input
 				type="range"
-				min="4"
+				min="10"
 				max="800"
 				value="50"
 				class="slider"
 				id="mySpeed" />
 		</div>
-		<div>
+		<div class="centerchilds margin">
 			<label for="colorpicker">Color Picker:</label>
 			<input type="color" id="colorpicker" value="#0000ff" />
 		</div>

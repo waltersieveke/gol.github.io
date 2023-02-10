@@ -4,11 +4,27 @@ let ctx = canvas.getContext("2d");
 let loopx, loopy;
 let zellBreite = 20;
 let zellLaenge = zellBreite;
-let anzahlFelderLaenge = 500;
-let anzahlFelderBreite = 250;
-let feldlänge = 1300;
-let feldbreite = 660;
+let anzahlFelderLaenge = 0;
+let anzahlFelderBreite = 0;
+let feldbreite = 0;
+let feldlänge = 0;
 let draw = 0;
+document.addEventListener("DOMContentLoaded", function (event) {
+    rangeSlider(null);
+    //alles in beiden Feldern wird false
+    initFieldasFalse(feld);
+    initFieldasFalse(nextGenFeld);
+    feld[16][9] = lebendig;
+    feld[16][10] = lebendig;
+    feld[15][10] = lebendig;
+    feld[17][10] = lebendig; //stelt den anfangskörper dar
+    feld[17][11] = lebendig;
+    feld[17][12] = lebendig;
+    feld[16][12] = lebendig;
+    feld[15][12] = lebendig;
+    drawBoard(feld);
+    createCanvas();
+});
 //Schieberegler
 let range = document.getElementById("myRange");
 if (range) {
@@ -17,44 +33,31 @@ if (range) {
 //die Zellbreite wird mit dem regler geändert
 function rangeSlider(inputellll) {
     //console.log("rangeSlider");
-    if (range) {
-        zellBreite = inputellll.explicitOriginalTarget.value;
-        zellLaenge = zellBreite; //zum quadrat
-        if (feldbreite % zellBreite != 0) {
-            //modulo(%), nennt nur nachkommastellen
-            feldbreite = feldbreite - (feldbreite % zellBreite);
-            canvas.height = feldbreite;
-            if (ctx) {
-                ctx.clearRect(0, 0, feldlänge, feldbreite);
-                drawBoard(feld);
-                createCanvas();
-            }
-        }
-        else {
-            if (ctx) {
-                ctx.clearRect(0, 0, feldlänge, feldbreite);
-                drawBoard(feld);
-                createCanvas();
-            }
-        }
-        if (feldlänge % zellLaenge != 0) {
-            feldlänge = feldlänge - (feldlänge % zellLaenge);
-            canvas.width = feldlänge;
-            if (ctx) {
-                ctx.clearRect(0, 0, feldlänge, feldbreite);
-                drawBoard(feld);
-                createCanvas();
-            }
-        }
-        else {
-            if (ctx) {
-                ctx.clearRect(0, 0, feldlänge, feldbreite);
-                drawBoard(feld);
-                createCanvas();
-            }
-        }
-        feldbreite = 650;
-        feldlänge = 1300;
+    if (inputellll) {
+        zellBreite = Number(inputellll.explicitOriginalTarget.value) + 10;
+    }
+    else {
+        zellBreite = 20;
+    }
+    zellLaenge = zellBreite; //zum quadrat
+    //modulo(%), nennt nur nachkommastellen
+    feldlänge = window.innerWidth;
+    feldbreite = window.innerHeight * 0.8;
+    anzahlFelderLaenge = Math.floor(feldlänge / zellLaenge);
+    anzahlFelderBreite = Math.floor(feldbreite / zellBreite);
+    canvas.height = feldbreite - (feldbreite % zellBreite);
+    canvas.width = feldlänge - (feldlänge % zellLaenge);
+    u = false;
+    generationen = 0;
+    displayGenerationenScore();
+    feld = [];
+    nextGenFeld = [];
+    initFieldasFalse(nextGenFeld);
+    initFieldasFalse(feld);
+    if (ctx && inputellll) {
+        ctx.clearRect(0, 0, feldlänge, feldbreite);
+        drawBoard(feld);
+        createCanvas();
     }
 }
 //erstellen des Spielfeldes
@@ -160,19 +163,6 @@ function rules() {
         }
     }
 }
-//alles in beiden Feldern wird false
-initFieldasFalse(feld);
-initFieldasFalse(nextGenFeld);
-feld[16][9] = lebendig;
-feld[16][10] = lebendig;
-feld[15][10] = lebendig;
-feld[17][10] = lebendig; //stelt den anfangskörper dar
-feld[17][11] = lebendig;
-feld[17][12] = lebendig;
-feld[16][12] = lebendig;
-feld[15][12] = lebendig;
-drawBoard(feld);
-createCanvas();
 //button für einmaligen Generationswechsel pro click
 let btn = document.getElementById("Genw");
 if (btn) {
@@ -222,6 +212,7 @@ if (btn1) {
 }
 //funktion für den wechsel von true false also start stopp
 function buttonTrueFalse() {
+    console.log(u);
     //console.log("buttonTrueFalse");
     u = !u;
     //setzt u = true und false pro click
@@ -322,7 +313,7 @@ document.addEventListener("click", (MOUSEclick) => showCoords(MOUSEclick));
 function showCoords(event) {
     //console.log("showCoords");
     let x = event.clientX;
-    let y = event.clientY;
+    let y = event.clientY + scrollY;
     let Yfeld = ((y - event.explicitOriginalTarget.offsetTop) /
         zellBreite).toString();
     let Xfeld = //Koordinaten werden durch die Versetzung zum rand berechnet
@@ -341,7 +332,7 @@ function showCoords(event) {
         if (ctx) {
             ctx.clearRect(0, 0, feldlänge, feldbreite);
             if (draw == 0) {
-                drawBoard(nextGenFeld);
+                drawBoard(feld);
             }
             else {
                 drawRandomColor(feld);
@@ -434,4 +425,33 @@ function drawRandomColor(fieldvar) {
         }
         createCanvas();
     }
+}
+let darkBtn = document.getElementById("Darkmode");
+if (darkBtn) {
+    darkBtn.addEventListener("click", (DARK) => darkmode());
+}
+function darkmode2() {
+    if (p) {
+        document.body.bgColor = "black";
+        if (ctx) {
+            ctx.strokeStyle = "white";
+            createCanvas();
+        }
+    }
+    else {
+        document.body.bgColor = "white";
+        if (ctx) {
+            ctx.strokeStyle = "black";
+            createCanvas();
+        }
+    }
+}
+let p = false;
+function darkmode() {
+    console.log(p);
+    //console.log("buttonTrueFalse");
+    p = !p;
+    darkmode2();
+    //setzt u = true und false pro click
+    return p;
 }
